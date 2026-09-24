@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Profile Card</title>
+    <meta name="description" content="Personal Profile Card" />
+    <meta name="theme-color" content="#080a09" />
+    <meta property="og:title" content="Profile Card" />
+    <meta property="og:description" content="Personal Profile Card" />
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Profile Card" />
+    <meta name="twitter:description" content="Personal Profile Card" />
+    <meta name="twitter:image" content="" />
+    <link rel="icon" href="icon.jpg" type="image/png" />
+    <link rel="shortcut icon" href="icon.jpg" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script src="cursor-effects-shared.js"></script>
+
+
+
+    <link rel="stylesheet" href="layout4.css">
+
+    <!--
+        BẢN STATIC - KHÔNG DÙNG BACKEND.
+        Muốn đổi nội dung card (tên, avatar, bio, social, widget...) thì sửa thẳng
+        object CONFIG bên dưới rồi upload lại file này lên host.
+    -->
+    <script src="config.js"></script>
+
+
+<body>
+    <div class="background" id="background" style="background: #050505; position: fixed; inset: 0; z-index: -1;"></div>
+
+    <audio id="audio" src=""></audio>
+
+    <div class="overlay" id="overlay" onclick="window.dismissOverlay && window.dismissOverlay()"
+        style="cursor: pointer;">
+        <div class="ov-name" id="ov-name">@ qkhz</div>
+        <div class="ov-spinner-wrap">
+            <div class="ov-spinner"></div>
+            <div class="ov-spinner-2"></div>
+        </div>
+        <p class="ov-hint" id="ov-hint">[ click to start ]</p>
+    </div>
+
+    <div class="page-stack">
+        <div class="bio-container" id="card3dWrapper">
+            <div class="bio_content_container">
+                <div class="content-container css_content_container reveal" id="card3d">
+                    <div class="entry-sweep"></div>
+                    <div class="laser-matrix"></div>
+                    <div class="border_shimmer" aria-hidden="true"></div>
+
+                    <!-- Corner Brackets -->
+                    <div class="content">
+                        <div class="top">
+
+                            <!-- Left Avatar -->
+                            <div class="avatar-col">
+                                <div class="avatar-wrapper">
+                                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar"
+                                        class="avatar-img">
+                                    <img class="avatar-decoration" id="avatarDecoration" alt="" style="display:none;">
+                                </div>
+                                <span class="avatar-handle" id="avatarHandle"></span>
+
+                                <!-- Lyrics (dong bo voi bai nhac dang phat), nam duoi avatar, canh trai -->
+                                <div class="lyrics_container" id="lyricsContainer" style="display:none;">
+                                    <div class="lyrics_track" id="lyricsTrack"></div>
+                                </div>
+                            </div>
+
+                            <!-- Right Info -->
+                            <div class="info-wrapper">
+
+                                <div class="header-row">
+                                    <div class="name-pronouns">
+                                        <h1 id="userName">xk09</h1>
+                                        <div class="dc-badges" id="dcBadges"></div>
+                                        <p class="pronouns" id="bioText"
+                                            style="white-space: pre-wrap; word-break: break-word; margin: 0;"></p>
+                                    </div>
+
+                                    <div class="header-widgets">
+                                        <div
+                                            style="display: flex; flex-direction: column; align-items: stretch; gap: 10px;">
+                                            <div class="clock-widget">
+                                                <div class="analog-clock">
+                                                    <div class="clock-face">
+                                                        <div class="clock-hand clock-hour" id="analogHour"></div>
+                                                        <div class="clock-hand clock-minute" id="analogMinute"></div>
+                                                        <div class="clock-hand clock-second" id="analogSecond"></div>
+                                                        <div class="clock-center"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="clock-details">
+                                                    <span class="clock-location">Saigon</span>
+                                                    <span class="clock-time" id="currentTime">00:00:00</span>
+                                                    <span class="clock-date" id="currentDate">Mon, Jan 1</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="c-card c-guild weather-card" id="weather-widget"
+                                                style="display:none;">
+                                                <i class="fa-solid fa-cloud-sun" id="weather-icon"></i>
+                                                <div class="c-guild-info weather-info">
+                                                    <div id="weather-loc">Location</div>
+                                                    <div class="weather-main-line">
+                                                        <span id="weather-temp">-</span>°<span
+                                                            id="weather-unit">C</span>
+                                                        •
+                                                        <span id="weather-cond">-</span>
+                                                    </div>
+                                                    <div id="weather-range" style="display:none;">
+                                                        <i class="fa-solid fa-temperature-half"></i>
+                                                        <span id="weather-min">-</span> - <span
+                                                            id="weather-max">-</span>°<span
+                                                            id="weather-unit-range">C</span>
+                                                        Today
+                                                    </div>
+                                                    <div id="weather-wind" style="display:none;">
+                                                        <i class="fa-solid fa-wind"></i> <span
+                                                            id="weather-wind-val">-</span> km/h
+                                                    </div>
+                                                    <div id="weather-rain" style="display:none;">
+                                                        <i class="fa-solid fa-cloud-rain"></i>
+                                                        <span id="weather-rain-val">-</span> mm
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bio Text is now next to the name -->
+
+                                <div class="svg_container layout4-icons">
+                                    <a href="#" class="svg_item"><i class="fa-brands fa-roblox"></i></a>
+                                    <a href="#" class="svg_item"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="#" class="svg_item"
+                                        style="color: var(--nameColor, #ffe4f4); background: rgba(255,255,255,0.05);"><i
+                                            class="fa-brands fa-steam"></i></a>
+                                    <a href="#" class="svg_item"><i class="fa-brands fa-discord"></i></a>
+                                    <a href="#" class="svg_item"><i class="fa-brands fa-soundcloud"></i></a>
+                                    <a href="#" class="svg_item"><i class="fa-solid fa-link"></i></a>
+                                </div>
+
+                                <!-- weather moved -->
+
+                                <!-- Bottom Stats -->
+                                <div class="bio_small_infomation">
+                                    <div class="bio_infomation">
+                                        <div class="stat-item">
+                                            <i class="fa-solid fa-location-dot"></i> <span
+                                                id="bottomLocation">Saigon.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Discord Activity (Rich Presence) Card -->
+        <div class="dc-activity-card" id="dcActivityCard" style="display:none;">
+            <i class="fa-brands fa-discord dc-activity-watermark"></i>
+            <div class="dc-activity-art">
+                <img class="dc-activity-img" id="dcActivityImg" src="" alt="">
+                <span class="dc-activity-type-icon" id="dcActivityTypeIcon"><i class="fa-solid fa-gamepad"></i></span>
+            </div>
+            <div class="dc-activity-meta">
+                <div class="dc-activity-kind-row">
+                    <span class="dc-activity-live-dot"></span>
+                    <span class="dc-activity-kind" id="dcActivityKind">Đang chơi</span>
+                </div>
+                <div class="dc-activity-name" id="dcActivityName">-</div>
+                <div class="dc-activity-details" id="dcActivityDetails" style="display:none;"></div>
+                <div class="dc-activity-state" id="dcActivityState" style="display:none;"></div>
+                <div class="dc-activity-progress" id="dcActivityProgressWrap" style="display:none;">
+                    <div class="dc-activity-progress-track">
+                        <div class="dc-activity-progress-fill" id="dcActivityProgressFill"></div>
+                    </div>
+                </div>
+                <div class="dc-activity-elapsed" id="dcActivityElapsed" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Discord Invite / Server Card -->
+        <div class="dc-guild-card" id="discordGuildCard" style="display:none;">
+            <span class="dc-corner dc-corner-tl"></span>
+            <span class="dc-corner dc-corner-tr"></span>
+            <span class="dc-corner dc-corner-bl"></span>
+            <span class="dc-corner dc-corner-br"></span>
+            <div class="dc-card-glow" aria-hidden="true"></div>
+            <div class="dc-guild-body">
+                <div class="dc-guild-icon-wrap">
+                    <img class="dc-guild-icon" id="dcGuildIcon" src="" alt="">
+                    <span class="dc-guild-icon-status"></span>
+                </div>
+                <div class="dc-guild-meta">
+                    <div class="dc-guild-name-row">
+                        <span class="dc-guild-name" id="dcGuildName">Server</span>
+                        <i class="fa-brands fa-discord dc-guild-verified"></i>
+                    </div>
+                    <div class="dc-guild-desc" id="dcGuildDesc" style="display:none;"></div>
+                    <div class="dc-guild-counts">
+                        <span class="dc-dot"></span>
+                        <span id="dcOnlineCount">0</span> online
+                        <span class="dc-sep">•</span>
+                        <span id="dcMemberCount">0</span> members
+                    </div>
+                </div>
+                <a class="dc-join-btn" id="dcJoinBtn" href="#" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-discord"></i> Tham gia
+                </a>
+            </div>
+            <div class="dc-avatar-row" id="dcAvatarRow"></div>
+        </div>
+    </div>
+
+    <!-- Floating Music Widget -->
+    <div class="float-music-wrapper" id="musicWidget" style="display:none;">
+        <div class="float-music-panel" id="musicPanel">
+            <div class="fm-cover-wrap">
+                <img id="audio-thumb" src="" class="fm-cover">
+            </div>
+            <div class="fm-title" id="audio-title">No Track</div>
+            <div class="fm-progress">
+                <div class="fm-time" id="curTime">0:00</div>
+                <div class="fm-bar" id="pbar" onclick="seekTrack(event)">
+                    <div class="fm-fill" id="pfill"></div>
+                </div>
+                <div class="fm-time" id="durTime">3:19</div>
+            </div>
+            <div class="fm-controls">
+                <i class="fa-solid fa-backward-step" onclick="pPrev()"></i>
+                <div class="fm-play" id="playBtn" onclick="togglePlay()">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <i class="fa-solid fa-forward-step" onclick="pNext()"></i>
+            </div>
+            <div class="fm-volume">
+                <i class="fa-solid fa-volume-low" id="volIcon"></i>
+                <div class="fm-vol-bar" id="vbar" onclick="seekVol(event)">
+                    <div class="fm-vol-fill" id="vfill" style="width: 50%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="float-music-btn">
+            <i class="fa-solid fa-music"></i>
+        </div>
+    </div>
+
+    <script src="layout4.js"></script>
+
+    <!-- Lyrics data - RIENG cua ban, khong nam trong file nay. Moi bai nhac = 1 file lyricsN.js
+         (xem music/lyrics-shared.js va music/lyrics1.js). Them bai moi -> them 1 dong
+         <script src="music/lyricsN.js"> ngay ben duoi. -->
+    <script src="music/lyrics-shared.js"></script>
+    <script src="music/lyrics1.js"></script>
+    <!-- Thêm bài mới: tạo file music/lyrics2.js rồi uncomment dòng dưới -->
+    <!-- <script src="music/lyrics2.js"></script> -->
+    <!-- <script src="music/lyrics3.js"></script> -->
+
+    <!-- Dong bo lyric (nam thang trong card, khong boc box rieng) voi bai nhac dang phat -->
+    <script src="effects.js"></script>
+    <script src="lyric-intro-icon.js"></script>
+
+    <!-- ================= PLASMA BACKGROUND EFFECT (từ zyo.lol) ================= -->
+    <script type="module" src="plasma.js"></script>
+    <!-- end -->
+
+</body>
+
+</html>
