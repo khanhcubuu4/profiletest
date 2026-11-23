@@ -62,12 +62,12 @@ const CONFIG = {
   // --------------------------------------------------------------------------
   // 5. THÔNG TIN CÁ NHÂN (PROFILE INFO)
   // --------------------------------------------------------------------------
-  NAME_OVERRIDE: "xyun", // Tên hiển thị chính trên Card (tùy chỉnh thoải mái)
+  NAME_OVERRIDE: "Pit", // Tên hiển thị chính trên Card (tùy chỉnh thoải mái)
   AVATAR_OVERRIDE: "",        // Link avatar tùy chỉnh (để trống nếu dùng Discord avatar)
   LOCATION_TEXT: "Saigon",     // Vị trí hiển thị trên đồng hồ
 
   CUSTOM_BIOS: [
-    "just a simple bio.",
+    "meow",
     "welcome to my page."
   ],
 
@@ -122,7 +122,7 @@ const CONFIG = {
   // --------------------------------------------------------------------------
   DISCORD_LANYARD: {
     enabled: true,
-    id: "959315303907594240", // Discord User ID để lấy Avatar/Trạng thái tự động qua Lanyard API
+    id: "1047014641668206592", // Discord User ID để lấy Avatar/Trạng thái tự động qua Lanyard API
     autoRefresh: true,
     showActivityCard: false,
     customBadges: [
