@@ -1,0 +1,80 @@
+/* The desktop scene surrounds the original, independently styled profile card. */
+html:has(.desktop-page) { background: #03090d; scroll-behavior: auto; }
+body.desktop-page { --scene-light: .85; margin: 0; padding: 0; display: block; min-height: 100svh; background: #03090d !important; color: #f6f8ff; overflow-x: hidden; }
+.desktop-page #background, .desktop-page #overlay, .desktop-page .particles-container { display: none !important; }
+.ambient-scene { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 50% 5%, #172338 0, #091522 34%, #030c12 65%, #02070a 100%); }
+.ambient-halo { position: absolute; top: -30vh; left: 50%; width: min(85vw, 1100px); height: 108vh; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 25%, #d1d9fb 0, #9cafd6a6 13%, #657cba50 31%, #2d477620 52%, transparent 70%); filter: blur(42px); opacity: var(--scene-light); }
+#ambientRays { position: absolute; top: -4%; left: -10%; width: 120%; height: 120%; mix-blend-mode: screen; opacity: var(--scene-light); transform-origin: 50% 0; }
+/* Move the rendered fan itself on the compositor, independently of shader time. */
+.ambient-scene.rays-ready #ambientRays { animation: light-fan-sweep 6s ease-in-out infinite alternate; will-change: transform; }
+@keyframes light-fan-sweep {
+    0% { transform: rotate(-9deg) skewX(-3deg); }
+    50% { transform: rotate(0deg) skewX(0deg); }
+    100% { transform: rotate(9deg) skewX(3deg); }
+}
+.ambient-scene.rays-ready .ambient-beams { display: none; }
+.ambient-beams { position: absolute; top: -12vh; left: 50%; width: 150px; height: 115vh; transform: translateX(-50%); filter: blur(15px); opacity: var(--scene-light); }
+.ambient-beams span { position: absolute; top: 0; left: 50%; width: 490px; height: 105%; transform-origin: 50% 0; background: linear-gradient(180deg, #e5eaff9c, #a3b9ff24 35%, transparent 88%); clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%); animation: beam-drift 9s ease-in-out infinite alternate; }
+.ambient-beams span:nth-child(1) { --beam-angle: -37deg; width: 310px; margin-left: -155px; opacity: .48; }
+.ambient-beams span:nth-child(2) { --beam-angle: -18deg; margin-left: -245px; animation-delay: -7s; opacity: .7; }
+.ambient-beams span:nth-child(3) { --beam-angle: 1deg; width: 390px; margin-left: -195px; animation-delay: -3s; }
+.ambient-beams span:nth-child(4) { --beam-angle: 24deg; margin-left: -245px; animation-delay: -10s; opacity: .65; }
+.ambient-beams span:nth-child(5) { --beam-angle: 43deg; width: 270px; margin-left: -135px; animation-delay: -5s; opacity: .35; }
+@keyframes beam-drift { from { transform: rotate(calc(var(--beam-angle) - 12deg)) scaleX(.65); } to { transform: rotate(calc(var(--beam-angle) + 12deg)) scaleX(1.2); } }
+#ambientDust { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
+.ambient-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 25%, transparent 10%, #01060950 65%, #010609ad 100%); }
+#desktopShell, #desktopShell :not(#panel-card, #panel-card *):not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fa), #musicWidget :not(i):not(.fa-solid) { font-family: Inter, Arial, sans-serif !important; }
+.desktop-shell { position: relative; z-index: 2; min-height: 100svh; }
+.now-playing { position: fixed; z-index: 30; top: max(22px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; height: 36px; max-width: min(360px, 72vw); padding: 4px 13px 4px 5px; border: 1px solid #d6e2ff20; border-radius: 30px; background: #08101c52; box-shadow: 0 4px 18px #0002, inset 0 1px #ffffff0c; backdrop-filter: blur(22px); color: #e1e7f0a3; font-size: 11px; transition: background .25s, opacity .25s; }
+.now-playing:hover { background: #24334c80; color: #fff; }
+.now-playing > span:nth-child(2) { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.now-disc { display: grid; place-items: center; flex-shrink: 0; width: 25px; height: 25px; background: #edf2ff; color: #354059; border-radius: 50%; font-size: 10px; }
+.equalizer { display: flex; align-items: center; gap: 2px; height: 12px; margin-left: 4px; }
+.equalizer i { display: block; width: 2px; height: 4px; background: #b9c8e0; border-radius: 2px; }
+.is-playing .equalizer i { animation: equalize .8s ease-in-out infinite alternate; }
+.equalizer i:nth-child(2) { animation-delay: -.45s; }.equalizer i:nth-child(3) { animation-delay: -.2s; }.equalizer i:nth-child(4) { animation-delay: -.6s; }
+@keyframes equalize { to { height: 12px; } }
+.scene-main { min-height: 100svh; }
+.scene-panel { min-height: 100svh; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 110px 28px 120px; overflow-anchor: none; }
+.scene-panel[hidden] { display: none !important; }
+.scene-clock { text-align: center; margin-top: -6px; user-select: none; }
+.scene-date { margin: 0 0 7px; color: #f0f2fae0; font-size: 16px; font-weight: 500; letter-spacing: -.35px; text-shadow: 0 1px 14px #d5e4ff4a; }
+#desktopShell #sceneTime { font-size: clamp(84px, 10vw, 126px); line-height: .99; font-weight: 650; letter-spacing: -9px; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px #fff6, 0 0 38px #c1d4ff36; }
+.scene-signature { margin: 12px 0 0; font-size: 30px; line-height: 1.2; letter-spacing: -.9px; font-weight: 400; color: #bfc8d69c; text-shadow: 0 0 18px #cfddff33; }
+.scene-signature span { color: #e0e8f2c0; }
+.card-scene { padding-top: 95px; }
+.card-scene .page-stack { position: relative; z-index: 2; }
+.card-scene .reveal:not(.active) { opacity: 1; filter: none; transform: none; }
+.scene-pagination { position: fixed; z-index: 20; right: 22px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 4px; }
+.scene-pagination button { width: 22px; height: 18px; padding: 0; border: 0; background: transparent; display: grid; place-items: center; }
+.scene-pagination button::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #ffffff32; transition: background .3s, box-shadow .3s, transform .3s; }
+.scene-pagination button.is-active::after { background: #f3f7ff; box-shadow: 0 0 9px #e5edff; transform: scale(1.2); }
+.desktop-footer { position: fixed; z-index: 40; bottom: max(24px, env(safe-area-inset-bottom)); left: 30px; right: 30px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.desktop-footer > * { pointer-events: auto; }
+.desktop-brand { display: flex; align-items: center; gap: 14px; color: #e3e8f0; text-decoration: none; }
+.brand-mark { display: flex; gap: 7px; align-items: center; }.brand-mark i { font-size: 13px; }.brand-mark strong { font-size: 16px; font-weight: 800; letter-spacing: -.6px; }
+.brand-divider { width: 1px; height: 12px; background: #ffffff24; }.brand-location { display: flex; gap: 5px; align-items: center; font-size: 10px; color: #a7afbc; }.brand-location i { font-size: 8px; }
+.desktop-nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; padding: 5px; border: 1px solid #c1d6f929; border-radius: 100px; background: #080f16a8; box-shadow: 0 4px 22px #0005, inset 0 1px 2px #ffffff13, 0 0 0 3px #c4dbff04; backdrop-filter: blur(24px); }
+.desktop-nav button { z-index: 1; display: flex; justify-content: center; align-items: center; gap: 7px; min-width: 86px; height: 33px; padding: 0 14px; border: 0; border-radius: 40px; background: transparent; color: #8c97a8; font-size: 11px; font-weight: 600; transition: color .25s, background .25s; white-space: nowrap; }
+.desktop-nav button i { font-size: 10px; }.desktop-nav button:hover { color: #fff; background: #ffffff08; }.desktop-nav button.is-active { color: #1a2430; }
+.nav-indicator { position: absolute; z-index: 0; left: 5px; top: 5px; height: 33px; width: 86px; border-radius: 50px; background: #f5f8ff; box-shadow: 0 0 12px #d5e2ff3a, inset 0 0 2px #fff; transition: transform .42s cubic-bezier(.22,1,.36,1), width .3s; }
+.desktop-tools { display: flex; gap: 6px; }.desktop-tools button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border-radius: 50%; border: 1px solid #e5edff1a; background: #0b142078; color: #a7b2c4; font-size: 11px; transition: color .2s, background .2s; }.desktop-tools button:hover { color: #fff; background: #ffffff12; }
+.social-caption { color: #bdc8d9aa; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; }
+.social-dock { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 13px; border: 1px solid #d1e2ff38; border-radius: 25px; background: linear-gradient(140deg, #d1e2ff1a, #2139576b); backdrop-filter: blur(24px); box-shadow: inset 0 1px 3px #fff2, 0 15px 60px #0004; }
+.social-dock a, .social-dock button { --brand: #647ce5; position: relative; display: grid; place-items: center; flex-shrink: 0; width: 55px; height: 55px; border: 1px solid #ffffff27; border-radius: 16px; text-decoration: none; color: #fff; background: var(--brand); box-shadow: inset 0 2px 5px #ffffff2b, 0 4px 12px #0004; font-size: 25px; transition: transform .3s cubic-bezier(.2,1.6,.4,1), box-shadow .3s; }
+.social-dock a:hover, .social-dock button:hover { transform: translateY(-11px) scale(1.12); box-shadow: 0 12px 25px #0005; }
+.social-dock [data-label]::after { content: attr(data-label); position: absolute; bottom: calc(100% + 15px); padding: 6px 10px; border: 1px solid #ffffff20; border-radius: 8px; background: #0a111ee6; font: 11px Inter, sans-serif; opacity: 0; pointer-events: none; transition: opacity .2s; white-space: nowrap; }
+.social-dock [data-label]:hover::after { opacity: 1; }
+.social-note { color: #b0bfd46b; font-size: 12px; margin-top: 22px; }
+.desktop-toast { position: fixed; z-index: 90; bottom: 95px; left: 50%; transform: translate(-50%, 10px); padding: 10px 17px; border: 1px solid #ffffff20; border-radius: 30px; background: #111d2ce8; color: #e5edfa; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }.desktop-toast.visible { opacity: 1; transform: translate(-50%, 0); }
+/* Reuse the existing player and its controls without creating a second audio instance. */
+.desktop-page #musicWidget { position: fixed; top: 76px; bottom: auto; left: 50%; right: auto; width: min(310px, calc(100vw - 40px)); transform: translateX(-50%); z-index: 35; display: none !important; }
+.desktop-page.music-open #musicWidget { display: flex !important; animation: player-enter .35s ease both; }
+@keyframes player-enter { from { opacity: 0; margin-top: -8px; } to { opacity: 1; margin-top: 0; } }
+.desktop-page #musicPanel { position: relative; inset: auto; width: 100%; display: flex; opacity: 1; visibility: visible; pointer-events: auto; transform: none; box-sizing: border-box; border-radius: 24px; background: #0a131fea; border: 1px solid #e0eaff26; box-shadow: 0 14px 55px #0008, inset 0 1px 1px #fff1; backdrop-filter: blur(30px); padding: 20px; }
+.desktop-page .float-music-btn { display: none; }.desktop-page #musicPanel .fm-title { color: #e6ecf8; font-size: 12px; }.desktop-page #musicPanel .fm-cover-wrap { width: 48px; height: 48px; margin-bottom: 8px; }.desktop-page #musicPanel .fm-cover { border-radius: 12px; }.desktop-page #musicPanel .fm-play { background: #f0f5ff; color: #152137; }
+.motion-paused .ambient-halo, .motion-paused .ambient-beams span, .motion-paused .equalizer i, .motion-paused .ambient-scene.rays-ready #ambientRays { animation-play-state: paused; }
+.desktop-page button:focus-visible, .desktop-page a:focus-visible { outline: 2px solid #c9dbff; outline-offset: 5px; }
+@media (min-width: 900px) and (max-height: 750px) { #desktopShell #sceneTime { font-size: 108px; }.scene-date { font-size: 14px; }.scene-signature { font-size: 27px; } }
+@media (max-width: 700px) { .desktop-footer { left: 18px; right: 18px; bottom: max(21px, env(safe-area-inset-bottom)); height: 80px; align-items: flex-start; }.desktop-brand { gap: 10px; }.brand-mark strong { font-size: 14px; }.brand-location { font-size: 9px; }.desktop-tools button { width: 27px; height: 27px; }.desktop-nav { top: 45px; gap: 1px; }.desktop-nav button { min-width: 72px; padding: 0 10px; height: 32px; }.nav-indicator { height: 32px; }.scene-panel { padding: 100px 18px 145px; }.scene-date { font-size: 14px; }#desktopShell #sceneTime { letter-spacing: -6px; font-size: clamp(78px, 20vw, 112px); }.scene-signature { font-size: 25px; }.scene-pagination { right: 3px; }.card-scene { padding: 88px 20px 145px; }.now-playing { top: 20px; max-width: 78vw; }.social-dock { max-width: 290px; gap: 11px; }.social-dock a,.social-dock button { width: 49px; height: 49px; border-radius: 14px; }.desktop-toast { bottom: 128px; } }
+@media (prefers-reduced-motion: reduce) { .is-playing .equalizer i { animation: none; }.desktop-page.music-open #musicWidget { animation: none; }.nav-indicator, .social-dock a, .social-dock button { transition: none; }#ambientDust { display: none; } }

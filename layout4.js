@@ -2,6 +2,7 @@ const background = document.getElementById("background");
 
 function applyCustomBackground() {
   if (!background) return;
+  if (document.body.classList.contains("desktop-page")) return;
   document.body.style.background = "transparent";
   document.documentElement.style.backgroundColor = "#050505";
   const bgConfig = (window.CONFIG && window.CONFIG.BACKGROUND) || {};
@@ -2167,8 +2168,8 @@ function applyCustomSettings(_0x490352) {
 }
 async function initApp() {
   try {
-    let _0x5a8b55 = null;
-    try {
+    let _0x5a8b55 = typeof CONFIG !== "undefined" ? CONFIG : null;
+    if (!_0x5a8b55) try {
       const _0x257a61 = await fetch("/api/config");
       if (_0x257a61.ok) {
         _0x5a8b55 = await _0x257a61.json();
@@ -2318,6 +2319,8 @@ async function initApp() {
   } catch (_0x3bcd2c) {
     alert("Typewriter error: " + _0x3bcd2c.message);
   }
+  // The standalone profile reads config.js; it has no /api/config endpoint.
+  if (typeof CONFIG !== "undefined") return;
   setInterval(async () => {
     try {
       const _0x2e1c1b = await fetch("/api/config");

@@ -1,0 +1,45 @@
+HUONG DAN UPLOAD - PROFILE TRUONG
+=================================
+
+Ban da gom day du giao dien hien tai, config, anh, nhac va loi bai hat.
+
+1. Giai nen ZIP.
+2. Upload TOAN BO noi dung sau khi giai nen vao thu muc web cua host
+   (thuong la public_html, www hoac htdocs).
+3. index.html phai nam ngay trong thu muc web, khong boc them thu muc con.
+4. Giu nguyen ten file bai nhac va thu muc music/ de nhac va lyrics hoat dong.
+5. Mo ten mien cua ban. Neu dang cap nhat ban cu, bam Ctrl + F5.
+
+Day la website tinh: KHONG can npm install, npm start hay Node.js.
+Host PHP co the su dung index.php; trang nay cung mo duoc bang index.html.
+
+CHINH SUA CHO NGUOI KHAC
+- Sua ten, avatar, Discord ID, lien ket, nhac va thoi tiet trong config.js.
+- desktop.css / desktop.js: giao dien dong ho, cuon trang va tia sang.
+- layout4.css / layout4.js: profile card va cac tien ich hien tai.
+- music/lyrics1.js: loi bai hat dong bo.
+
+CAN KET NOI INTERNET
+Font, icon, avatar Discord, Lanyard va thoi tiet dang dung dich vu online.
+Trinh duyet co the yeu cau bam vao trang truoc khi phat nhac.
+Bam ten bai hat o phia tren de mo trinh phat nhac.
+
+Khong gom .git, scraper Node.js, file nhac trung lap hay tai nguyen khong su dung.
+
+DANH SACH FILE WEBSITE
+- NGHIÊM TỔNG & TRẦN TIỂU MUỘI NGONGIODEMQUATRANGSANGDEMNAY prod. NGÔ HẠO & MAI CẢNH DỊ - MCK __ Nger.mp3
+- config.js
+- cursor-effects-shared.js
+- desktop.css
+- desktop.js
+- effects.js
+- icon.jpg
+- index.html
+- index.php
+- layout4.css
+- layout4.js
+- lyric-intro-icon.js
+- music/lyrics-shared.js
+- music/lyrics1.js
+- plasma.js
+- vercel.json
