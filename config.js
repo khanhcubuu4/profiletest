@@ -76,7 +76,7 @@ const CONFIG = {
     {
       label: "Discord",
       icon: "discord",
-      url: "959315303907594240",
+      url: "1047014641668206592",
       isCopy: true // Click để copy Discord ID thay vì mở link
     },
     {
@@ -92,7 +92,7 @@ const CONFIG = {
     {
       label: "GitHub",
       icon: "github",
-      url: "https://github.com/khanhdz59207"
+      url: ""
     }
   ],
 
