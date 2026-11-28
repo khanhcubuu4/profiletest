@@ -87,12 +87,12 @@ const CONFIG = {
     {
       label: "Spotify",
       icon: "spotify",
-      url: ""
+      url: "https://open.spotify.com/playlist/4q3xHWNPQAnWeoAr4JAIzR?si=7cfd3db6f9f3499b"
     },
     {
       label: "GitHub",
       icon: "github",
-      url: ""
+      url: "https://github.com/pitpit"
     }
   ],
 
